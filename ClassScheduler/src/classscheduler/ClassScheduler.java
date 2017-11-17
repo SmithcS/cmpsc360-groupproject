@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classscheduler;
-
+import java.util.List;
 /**
- *
- * @author JoeBoisse
+ * @author Smith Sopp, Joe Boisse
  */
 public class ClassScheduler {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         
-        
+        StudentQueries sq = new StudentQueries();
+        List<Student> students = sq.getAllStudents();
+        System.out.println("Hello World!");
     }
     
 }

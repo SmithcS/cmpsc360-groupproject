@@ -9,8 +9,9 @@ public class Student {
     public Student() {   
     }
 
-    public Student(String fName, String lName, String campus, String semStanding, 
+    public Student(int studentID, String fName, String lName, String campus, String semStanding, 
             double tCredits) {
+        this.studentID = studentID;
         this.fName = fName;
         this.lName = lName;
         this.campus = campus;

@@ -15,14 +15,11 @@ public class StudentQueries {
             conn = Database.getConnection();
             
             selectAllStudents = conn.prepareStatement("SELECT * FROM STUDENTS");
-            
             selectByLName = conn.prepareStatement("SELECT * FROM STUDENTS WHERE"
-                    + "LName = ?");
-            
+                    + " L_NAME = ?"); 
             newStudent = conn.prepareStatement("INSERT INTO STUDENTS"
-                    + "(F_NAME, L_NAME, CAMPUS, SEM_STANDING, T_CREDITS)"
-                    + "VALUES (?,?,?,?,?)");
-                             
+                    + "(ID_NUM, F_NAME, L_NAME, CAMPUS, SEM_STANDING, T_CREDITS)"
+                    + "VALUES (?,?,?,?,?,?)");                    
         }
         catch(SQLException sqlException) {
             sqlException.printStackTrace();
@@ -31,7 +28,7 @@ public class StudentQueries {
     }
         
     public List<Student> getAllStudents() {
-        List< Student > results = null;
+        List<Student> results = null;
         ResultSet rs = null;
         try {
             rs = selectAllStudents.executeQuery();
@@ -39,6 +36,7 @@ public class StudentQueries {
             
             while(rs.next()) {
                 results.add(new Student (
+                    rs.getInt("ID_NUM"),
                     rs.getString("F_NAME"), 
                     rs.getString("L_NAME"),
                     rs.getString("CAMPUS"), 
@@ -70,10 +68,11 @@ public class StudentQueries {
         try {
             selectByLName.setString(1, name);
             rs = selectByLName.executeQuery();
-            results = new ArrayList< Student >();
+            results = new ArrayList<Student>();
             
             while(rs.next()) {
                 results.add(new Student (
+                    rs.getInt("ID_NUM"),
                     rs.getString("F_NAME"), 
                     rs.getString("L_NAME"),
                     rs.getString("CAMPUS"), 

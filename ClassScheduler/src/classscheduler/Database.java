@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Database {
     
-    private static final String dbURL = "jdbc:derby://localhost:1527/ClassScheduler";
+    private static final String dbURL = "jdbc:derby://localhost:1527/CLASS_SCHEDULER";
     private static final String user = "java";
     private static final String pass = "java";
     private static Connection connection = null;
