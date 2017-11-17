@@ -1,19 +1,16 @@
 package classscheduler;
 
-public class Student 
-{
+public class Student {
     private int studentID;
     private String fName, lName;
     private String campus, semStanding;
     private double credits, tCredits;
      
-    public Student()
-    {   
+    public Student() {   
     }
 
     public Student(String fName, String lName, String campus, String semStanding, 
-            double tCredits) 
-    {
+            double tCredits) {
         this.fName = fName;
         this.lName = lName;
         this.campus = campus;
@@ -76,6 +73,4 @@ public class Student
     public void settCredits() {
         this.tCredits = tCredits+credits;
     }
-    
-    
 }
