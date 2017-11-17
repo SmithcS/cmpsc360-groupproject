@@ -4,13 +4,13 @@ public class Student {
     private int studentID;
     private String fName, lName;
     private String campus, semStanding;
-    private double credits, tCredits;
+    private int tCredits;
      
     public Student() {   
     }
 
     public Student(int studentID, String fName, String lName, String campus, String semStanding, 
-            double tCredits) {
+            int tCredits) {
         this.studentID = studentID;
         this.fName = fName;
         this.lName = lName;
@@ -59,19 +59,11 @@ public class Student {
         this.semStanding = semStanding;
     }
 
-    public double getCredits() {
-        return credits;
-    }
-
-    public void setCredits(double credits) {
-        this.credits = credits;
-    }
-
-    public double gettCredits() {
+    public double getTCredits() {
         return tCredits;
     }
 
-    public void settCredits() {
-        this.tCredits = tCredits+credits;
+    public void setTCredits() {
+        this.tCredits = tCredits;
     }
 }

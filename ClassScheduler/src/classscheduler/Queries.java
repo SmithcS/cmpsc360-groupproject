@@ -12,7 +12,8 @@ public class Queries {
     private PreparedStatement selectAllCourses;
     private PreparedStatement selectByCourseName;
     private PreparedStatement newCourse;
-    private PreparedStatement selectAllEnrollment;
+    private PreparedStatement selectAllEnrollments;
+    private PreparedStatement newEnrollment;
     
     public Queries() {
         try {
@@ -26,8 +27,14 @@ public class Queries {
                     + "VALUES (?,?,?,?,?,?)");     
             selectAllCourses = conn.prepareStatement("SELECT * FROM COURSES");
             selectByCourseName = conn.prepareStatement("SELECT * FROM COURSES WHERE"
-                    + " NAME = ?");  
-            selectAllEnrollment = conn.prepareStatement("SELECT * FROM ENROLLMENT");
+                    + " C_NAME = ?");  
+            newCourse = conn.prepareStatement("INSERT INTO COURSES"
+                    + "(C_NAME, CAMPUS, SEMESTER, IS_FULL, CREDITS, C_TIME)"
+                    + "VALUES (?,?,?,?,?,?)");
+            selectAllEnrollments = conn.prepareStatement("SELECT * FROM ENROLLMENT");
+            newEnrollment = conn.prepareStatement("INSERT INTO ENROLLMENT"
+                    + "(STUDENT_ID_NUM, COURSE_NAME)"
+                    + "VALUES (?,?)");
         }
         catch(SQLException sqlException) {
             sqlException.printStackTrace();
@@ -50,7 +57,7 @@ public class Queries {
                     rs.getString("L_NAME"),
                     rs.getString("CAMPUS"), 
                     rs.getString("SEM_STANDING"),
-                    rs.getDouble("T_CREDITS")
+                    rs.getInt("T_CREDITS")
                 ));        
             }
         }
@@ -86,7 +93,7 @@ public class Queries {
                     rs.getString("L_NAME"),
                     rs.getString("CAMPUS"), 
                     rs.getString("SEM_STANDING"),
-                    rs.getDouble("T_CREDITS")
+                    rs.getInt("T_CREDITS")
                 ));        
             }
         }
@@ -107,6 +114,22 @@ public class Queries {
         return results;
     }
     
+    public void newStudent(int id_num, String fName, String lName, String campus, String semester, int tCredits) {       
+        try {
+            newStudent.setInt(1, id_num);
+            newStudent.setString(2, fName);
+            newStudent.setString(3, lName);
+            newStudent.setString(4, campus);
+            newStudent.setString(5, semester);
+            newStudent.setInt(6, tCredits);
+            newStudent.executeUpdate();
+        }
+        catch (SQLException sqlException) {
+            sqlException.printStackTrace();      
+        }   
+        
+    }
+    
     public List<Course> getAllCourses() {
         List<Course> results = null;
         ResultSet rs = null;
@@ -117,12 +140,12 @@ public class Queries {
             
             while(rs.next()) {
                 results.add(new Course (
-                    rs.getString("NAME"),
+                    rs.getString("C_NAME"),
                     rs.getString("CAMPUS"),
                     rs.getString("SEMESTER"),
                     rs.getBoolean("IS_FULL"),
                     rs.getInt("CREDITS"),
-                    rs.getInt("TIME")
+                    rs.getInt("C_TIME")
                 ));        
             }
         }
@@ -153,12 +176,12 @@ public class Queries {
             
             while(rs.next()) {
                 results.add(new Course (
-                    rs.getString("NAME"),
+                    rs.getString("C_NAME"),
                     rs.getString("CAMPUS"),
                     rs.getString("SEMESTER"),
                     rs.getBoolean("IS_FULL"),
                     rs.getInt("CREDITS"),
-                    rs.getInt("TIME")
+                    rs.getInt("C_TIME")
                 ));        
             }
         }
@@ -178,12 +201,28 @@ public class Queries {
         return results;
     }
     
-    public List<Enrollment> getAllEnrollment() {
+    public void newCourse(String name, String campus, String semester, boolean isFull, int credits, int time) {       
+        try {
+            newCourse.setString(1, name);
+            newCourse.setString(2, campus);
+            newCourse.setString(3, semester);
+            newCourse.setBoolean(4, isFull);
+            newCourse.setInt(5, credits);
+            newCourse.setInt(6, time);
+            newCourse.executeUpdate();
+        }
+        catch (SQLException sqlException) {
+            sqlException.printStackTrace();      
+        }   
+        
+    }
+    
+    public List<Enrollment> getAllEnrollments() {
         List<Enrollment> results = null;
         ResultSet rs = null;
         
         try {
-            rs = selectAllEnrollment.executeQuery();
+            rs = selectAllEnrollments.executeQuery();
             results = new ArrayList<Enrollment>();
             
             while(rs.next()) {
@@ -207,6 +246,18 @@ public class Queries {
             }
         }
         return results;
+    }
+    
+    public void newEnrollment(int studentIDNum, String courseName) { 
+        try {
+            newEnrollment.setInt(1, studentIDNum);
+            newEnrollment.setString(2, courseName);
+            newEnrollment.executeUpdate();
+        }
+        catch (SQLException sqlException) {
+            sqlException.printStackTrace();      
+        }   
+        
     }
        
     private void close() {
