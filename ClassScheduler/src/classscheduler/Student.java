@@ -63,7 +63,7 @@ public class Student {
         return tCredits;
     }
 
-    public void setTCredits() {
+    public void setTCredits(int tCredits) {
         this.tCredits = tCredits;
     }
 }
