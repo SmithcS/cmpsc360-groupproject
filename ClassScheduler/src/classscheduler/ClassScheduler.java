@@ -9,6 +9,7 @@ public class ClassScheduler {
         Queries q = new Queries();
         List<Student> students = q.getAllStudents();
         List<Course> courses = q.getAllCourses();
+        List<Enrollment> enrollment = q.getAllEnrollment();
         System.out.println("Hello World!");
         System.out.println(students.get(0).getfName());
         System.out.println(courses.get(0).getName());
@@ -16,5 +17,7 @@ public class ClassScheduler {
         System.out.println(students.get(0).getStudentID());  
         courses = q.getByCourseName("CMPSC360");
         System.out.println(courses.get(0).getName());
+        System.out.println(enrollment.get(0).getCourseName());
+        
     }
 }

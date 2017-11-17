@@ -12,6 +12,7 @@ public class Queries {
     private PreparedStatement selectAllCourses;
     private PreparedStatement selectByCourseName;
     private PreparedStatement newCourse;
+    private PreparedStatement selectAllEnrollment;
     
     public Queries() {
         try {
@@ -25,7 +26,8 @@ public class Queries {
                     + "VALUES (?,?,?,?,?,?)");     
             selectAllCourses = conn.prepareStatement("SELECT * FROM COURSES");
             selectByCourseName = conn.prepareStatement("SELECT * FROM COURSES WHERE"
-                    + " NAME = ?");            
+                    + " NAME = ?");  
+            selectAllEnrollment = conn.prepareStatement("SELECT * FROM ENROLLMENT");
         }
         catch(SQLException sqlException) {
             sqlException.printStackTrace();
@@ -157,6 +159,37 @@ public class Queries {
                     rs.getBoolean("IS_FULL"),
                     rs.getInt("CREDITS"),
                     rs.getInt("TIME")
+                ));        
+            }
+        }
+        catch (SQLException sqlException) {
+            sqlException.printStackTrace();      
+        }   
+        
+        finally {
+            try {
+                rs.close();
+            }
+            catch(SQLException sqlException) {
+                sqlException.printStackTrace();
+                close();
+            }
+        }
+        return results;
+    }
+    
+    public List<Enrollment> getAllEnrollment() {
+        List<Enrollment> results = null;
+        ResultSet rs = null;
+        
+        try {
+            rs = selectAllEnrollment.executeQuery();
+            results = new ArrayList<Enrollment>();
+            
+            while(rs.next()) {
+                results.add(new Enrollment (
+                    rs.getInt("STUDENT_ID_NUM"),
+                    rs.getString("COURSE_NAME")
                 ));        
             }
         }
