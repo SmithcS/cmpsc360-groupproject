@@ -101,6 +101,10 @@ public class ClassScheduler {
         {
             q.newEnrollment(s.getStudentID(), c.getName());
         }
+        else{
+            System.out.println("Unable to Schedule Class");
+            l = q.getAllEnrollments();
+        }
     }
     
 }
