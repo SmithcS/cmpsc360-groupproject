@@ -32,6 +32,14 @@ public class ClassScheduler {
             System.out.println("Free seat!");
         } else {
             System.out.println("No space.");
+            
+            if(canWaitlist(courses.get(0)))
+            {
+                System.out.println("However, you can waitlist the course.");                    
+            }
+            else {
+                System.out.println("Waitlist Full");
+            }
         }
         
     }
@@ -50,19 +58,49 @@ public class ClassScheduler {
     
     // If the class is full, then you can waitlist it
     public static boolean canWaitlist(Course c) {
-        if (c.isIsFull()) {
-            return true;
-        } else {
-            return false;
-        }
+        return c.isIsFull();
     }
     
     // If the class is on your campus, then you can schedule it
     public static boolean isCorrectCampus(Course c, Student s) {
-        if (c.getCampus() == s.getCampus()) {
+        return c.getCampus().equals(s.getCampus());
+    }
+    //If the class has a prerequisite and you meet that prerequisite, then you can schedule it
+    public static boolean hasPreReq(Course c, Student s, List < Enrollment> l)
+    {
+        Enrollment e;
+        String preq = c.getPrereq();
+        if(preq == null)
+        {
             return true;
-        } else {
-            return false;
+        }
+        else
+        {
+           int id = s.getStudentID();
+           for(int i=0;i<l.size();i++)
+           {
+               e = l.get(i);
+               if(e.getStudentIDNum() == id)
+               {
+                   if(e.getCourseName().equals(preq))
+                   {
+                       return true;
+                   }
+               }
+           }
+           return false;
         }
     }
+    //Method for adding a course for the student to the enrollment list
+    public void Schedule(Student s, Course c, List < Enrollment> l)
+    {
+        Queries q = new Queries();
+        boolean a = hasPreReq(c, s, l);
+        boolean b = isCorrectCampus(c, s);
+        if(a && b)
+        {
+            q.newEnrollment(s.getStudentID(), c.getName());
+        }
+    }
+    
 }
