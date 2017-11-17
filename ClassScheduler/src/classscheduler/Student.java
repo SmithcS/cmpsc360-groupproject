@@ -1,6 +1,4 @@
-
 package classscheduler;
-
 
 public class Student 
 {
@@ -8,8 +6,7 @@ public class Student
     private String fName, lName;
     private String campus, semStanding;
     private double credits, tCredits;
-    
-    
+     
     public Student()
     {   
     }

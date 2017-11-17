@@ -1,4 +1,3 @@
-
 package classscheduler;
 
 import java.sql.*;
@@ -24,10 +23,9 @@ public class StudentQueries
                     + "LName = ?");
             
             newStudent = conn.prepareStatement("INSERT INTO STUDENTS"
-                    + "(ID_Number, FName, LName, Campus, TotalCredits)"
+                    + "(F_NAME, L_NAME, CAMPUS, SEM_STANDING, T_CREDITS)"
                     + "VALUES (?,?,?,?,?)");
                              
-           
         }
         catch(SQLException sqlException)
         {
@@ -36,21 +34,24 @@ public class StudentQueries
         }
     }
         
-    public List< Student > getAllStudents()
+    public List<Student> getAllStudents()
     {
         List< Student > results = null;
-        ResultSet resultSet = null;
+        ResultSet rs = null;
         try
         {
-            resultSet = selectAllStudents.executeQuery();
+            rs = selectAllStudents.executeQuery();
             results = new ArrayList< Student >();
             
-            while(resultSet.next())
+            while(rs.next())
             {
-                results.add(new Student (resultSet.getInt(ID_NUMBER),
-                    resultSet.getString("FName"), resultSet.getString("LName"),
-                    resultSet.getString("Campus"), 
-                    resultSet.getString("TotalCredits")));        
+                results.add(new Student (
+                    rs.getString("F_NAME"), 
+                    rs.getString("L_NAME"),
+                    rs.getString("CAMPUS"), 
+                    rs.getString("SEM_STANDING"),
+                    rs.getDouble("T_CREDITS")
+                ));        
             }
         }
         catch (SQLException sqlException)
@@ -63,7 +64,7 @@ public class StudentQueries
         {
             try
             {
-                resultSet.close();
+                rs.close();
             }
             catch(SQLException sqlException)
             {
@@ -75,22 +76,26 @@ public class StudentQueries
         return results;
     }
     
-    public List< Student > getByLName(String name)
+    public List<Student> getByLName(String name)
     {
         List< Student > results = null;
-        ResultSet resultSet = null;
+        ResultSet rs = null;
         
         try
         {
             selectByLName.setString(1, name);
-            resultSet = selectByLName.executeQuery();
+            rs = selectByLName.executeQuery();
             results = new ArrayList< Student >();
-            while(resultSet.next())
+            
+            while(rs.next())
             {
-                results.add(new Student (resultSet.getInt(ID_NUMBER),
-                    resultSet.getString("FName"), resultSet.getString("LName"),
-                    resultSet.getString("Campus"), 
-                    resultSet.getString("TotalCredits")));        
+                results.add(new Student (
+                    rs.getString("F_NAME"), 
+                    rs.getString("L_NAME"),
+                    rs.getString("CAMPUS"), 
+                    rs.getString("SEM_STANDING"),
+                    rs.getDouble("T_CREDITS")
+                ));        
             }
         }
         catch (SQLException sqlException) 
@@ -102,7 +107,7 @@ public class StudentQueries
         {
             try
             {
-                resultSet.close();
+                rs.close();
             }
             catch(SQLException sqlException)
             {
