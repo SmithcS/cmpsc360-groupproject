@@ -145,7 +145,8 @@ public class Queries {
                     rs.getString("SEMESTER"),
                     rs.getBoolean("IS_FULL"),
                     rs.getInt("CREDITS"),
-                    rs.getInt("C_TIME")
+                    rs.getInt("C_TIME"),
+                    rs.getString("PRE_REQ")
                 ));        
             }
         }
@@ -181,7 +182,8 @@ public class Queries {
                     rs.getString("SEMESTER"),
                     rs.getBoolean("IS_FULL"),
                     rs.getInt("CREDITS"),
-                    rs.getInt("C_TIME")
+                    rs.getInt("C_TIME"),
+                    rs.getString("PRE_REQ")
                 ));        
             }
         }
@@ -201,7 +203,7 @@ public class Queries {
         return results;
     }
     
-    public void newCourse(String name, String campus, String semester, boolean isFull, int credits, int time) {       
+    public void newCourse(String name, String campus, String semester, boolean isFull, int credits, int time, String prereq) {       
         try {
             newCourse.setString(1, name);
             newCourse.setString(2, campus);
@@ -209,6 +211,7 @@ public class Queries {
             newCourse.setBoolean(4, isFull);
             newCourse.setInt(5, credits);
             newCourse.setInt(6, time);
+            newCourse.setString(7, prereq);
             newCourse.executeUpdate();
         }
         catch (SQLException sqlException) {
