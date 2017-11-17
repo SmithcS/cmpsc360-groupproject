@@ -1,5 +1,7 @@
 package classscheduler;
 
+//author  Joe Boisse
+
 public class Student {
     private int studentID;
     private String fName, lName;
