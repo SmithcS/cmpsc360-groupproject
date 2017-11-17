@@ -9,17 +9,19 @@ public class Course {
     private String semester;
     private boolean isFull;
     private int credits, time;
+    private String prereq;
     
     public Course() {
     }
     
-    public Course(String name, String campus, String semester, boolean isFull, int credits, int time) {
+    public Course(String name, String campus, String semester, boolean isFull, int credits, int time, String prereq) {
         this.name = name;
         this.campus = campus;
         this.semester = semester;
         this.isFull = isFull;
         this.credits = credits;
         this.time = time;
+        this.prereq =prereq;
     }
     
     public String getName() {
@@ -69,4 +71,13 @@ public class Course {
     public void setTime(int time) {
         this.time = time;
     }
+
+    public String getPrereq() {
+        return prereq;
+    }
+
+    public void setPrereq(String prereq) {
+        this.prereq = prereq;
+    }
+    
 }
